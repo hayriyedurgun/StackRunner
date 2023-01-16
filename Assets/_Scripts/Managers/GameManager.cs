@@ -17,11 +17,14 @@ namespace Assets._Scripts.Managers
 
         [NonSerialized]
         public Level CurrentLevel;
+
         public Action<GameState> GameStateChanged;
 
         public GameplaySettings GameplaySettings;
 
         public List<Level> Levels;
+
+        public TileSplitObjectPool ObjectPool;
 
         private GameState m_GameState;
         public GameState GameState
@@ -40,6 +43,7 @@ namespace Assets._Scripts.Managers
 
             m_CurrentLevelIndex = 0;
             LoadLevel();
+            ObjectPool.Init(10);
         }
 
         private void Start()

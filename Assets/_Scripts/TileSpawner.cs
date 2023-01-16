@@ -13,12 +13,11 @@ namespace Assets._Scripts
     {
         private float m_CurrentDistance = 0f;
         private TileController m_CurrentTile;
-        private MaterialLibrary m_MaterialLibrary;
 
         public float TileLenght = 2;
         public TileController TilePrefab;
         public TileController InitialTile;
-        
+
         private void Start()
         {
             m_CurrentDistance += TileLenght;
@@ -30,6 +29,11 @@ namespace Assets._Scripts
             if (GameManager.Instance)
             {
                 GameManager.Instance.GameStateChanged -= OnStateChanged;
+            }
+
+            if (m_CurrentTile)
+            {
+                m_CurrentTile.TilePlaced -= OnTilePlaced;
             }
         }
 
@@ -43,9 +47,10 @@ namespace Assets._Scripts
             var tile = Instantiate(TilePrefab, GameManager.Instance.CurrentLevel.transform);
             tile.transform.localScale = m_CurrentTile.transform.localScale;
             var direction = m_CurrentDistance % (TileLenght * 2) == 0 ? 1 : -1;
-            
+
             var pos = tile.transform.position;
-            pos.x = tile.transform.localScale.x * direction;
+            //pos.x = tile.transform.localScale.x * direction;
+            pos.x = GameManager.Instance.GameplaySettings.SpawnX * direction;
             pos.z = m_CurrentDistance;
             tile.transform.position = pos;
 
