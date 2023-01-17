@@ -32,7 +32,20 @@ namespace Assets._Scripts
             }
         }
 
-        public Transform Destination => GameManager.Instance.CurrentLevel.CurrentTile.transform;
+        public Transform Destination
+        {
+            get
+            {
+                if (GameManager.Instance.CurrentLevel.CurrentTile)
+                {
+                    return GameManager.Instance.CurrentLevel.CurrentTile.transform;
+                }
+                else
+                {
+                    return transform;
+                }
+            }
+        }
 
         private void Start()
         {

@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Spawner: {fileID: 2744139614491228030}
   m_InitialTile: {fileID: 2720593597397842059}
-  TileCount: 5
+  TileCount: 10
 --- !u!1001 &3393010461939735614
 PrefabInstance:
   m_ObjectHideFlags: 0

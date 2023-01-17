@@ -34,7 +34,7 @@ namespace Assets._Scripts
             pos.z = m_CurrentDistance;
             tile.transform.position = pos;
 
-            tile.Init(tile);
+            tile.Init(previousTile);
 
             m_CurrentDistance += m_TileLenght;
 

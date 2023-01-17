@@ -14,9 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterSpeed: 4
   TileSpeed: 5
-  SpawnX: 3.5
-  YoyoDuration: 1
+  SpawnX: 4
+  YoyoDuration: 2
   Ease: 1
   CamRotationSpeed: 50
-  Angle: 50
-  Len: 1
+  CutThreshold: 1

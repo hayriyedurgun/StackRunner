@@ -21,5 +21,7 @@ namespace Assets._Scripts.ScriptableObjects
         public Ease Ease = Ease.Linear;
 
         public float CamRotationSpeed = 2;
+
+        public float CutThreshold = .1f;
     }
 }

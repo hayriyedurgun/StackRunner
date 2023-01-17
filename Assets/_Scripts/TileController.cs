@@ -31,7 +31,6 @@ namespace Assets._Scripts
                 Place();
                 return;
             }
-
         }
 
         public void Init(TileController previousTile)
@@ -50,6 +49,7 @@ namespace Assets._Scripts
             m_Tween = null;
 
             var splitDiff = transform.position.x - m_PreviousTile.transform.position.x;
+
             if (Math.Abs(splitDiff) >= m_PreviousTile.transform.localScale.x)
             {
                 Destroy(gameObject);
@@ -65,36 +65,44 @@ namespace Assets._Scripts
         private void Split(float diff)
         {
             var newSize = m_PreviousTile.transform.localScale.x - Mathf.Abs(diff);
-            var direction = diff > 0 ? 1 : -1;
             var fallingTileSize = transform.localScale.x - newSize;
+            if (fallingTileSize > Settings.CutThreshold)
+            {
+                var direction = diff > 0 ? 1 : -1;
 
-            var newPos = m_PreviousTile.transform.position.x + (diff / 2f);
+                var newPos = m_PreviousTile.transform.position.x + (diff / 2f);
 
-            var scale = transform.localScale;
-            scale.x = newSize;
-            transform.localScale = scale;
+                var scale = transform.localScale;
+                scale.x = newSize;
+                transform.localScale = scale;
 
-            var pos = transform.position;
-            pos.x = newPos;
-            transform.position = pos;
+                var pos = transform.position;
+                pos.x = newPos;
+                transform.position = pos;
 
-            var edge = transform.position.x + (newSize / 2f * direction);
-            var fallingPos = edge + (fallingTileSize / 2f * direction);
+                var edge = transform.position.x + (newSize / 2f * direction);
+                var fallingPos = edge + (fallingTileSize / 2f * direction);
 
-            var splitTile = GameManager.Instance.ObjectPool.GetObject();
-            splitTile.transform.SetParent(GameManager.Instance.CurrentLevel.transform);
-            splitTile.gameObject.SetActive(true);
-            splitTile.SetMaterial(m_CurrentMaterial);
+                var splitTile = GameManager.Instance.ObjectPool.GetObject();
+                splitTile.transform.SetParent(GameManager.Instance.CurrentLevel.transform);
+                splitTile.gameObject.SetActive(true);
+                splitTile.SetMaterial(m_CurrentMaterial);
 
-            scale = transform.localScale;
-            scale.x = fallingTileSize;
-            splitTile.transform.localScale = scale;
+                scale = transform.localScale;
+                scale.x = fallingTileSize;
+                splitTile.transform.localScale = scale;
 
-            pos = transform.position;
-            pos.x = fallingPos;
-            splitTile.transform.position = pos;
+                pos = transform.position;
+                pos.x = fallingPos;
+                splitTile.transform.position = pos;
 
-            StartCoroutine(Release(splitTile));
+                StartCoroutine(Release(splitTile));
+                AudioManager.Instance.Reset();
+            }
+            else
+            {
+                AudioManager.Instance.Play();
+            }
         }
 
         private IEnumerator Release(TileSplitController tile)
