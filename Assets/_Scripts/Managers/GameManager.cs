@@ -26,6 +26,8 @@ namespace Assets._Scripts.Managers
 
         public TileSplitObjectPool ObjectPool;
 
+        public CharacterController Character;
+
         private GameState m_GameState;
         public GameState GameState
         {

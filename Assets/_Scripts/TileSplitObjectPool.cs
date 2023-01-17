@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets._Scripts
 {
-    public enum GameState
+    public class TileSplitObjectPool : ObjectPool<TileSplitController>
     {
-        Loading,
-        Playing,
-        PostGameOver,
-        GameOver,
-        Success
     }
 }

@@ -36,6 +36,8 @@ namespace Assets._Scripts.Managers
 
         private void OnGameStateChanged(GameState state)
         {
+            if (state == GameState.PostGameOver) return;
+
             LoadingPanel.ChangeVisibility(state == GameState.Loading);
             PlayingPanel.ChangeVisibility(state == GameState.Playing);
             SuccessPanel.ChangeVisibility(state == GameState.Success);

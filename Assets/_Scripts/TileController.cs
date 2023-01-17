@@ -53,7 +53,7 @@ namespace Assets._Scripts
             if (Math.Abs(splitDiff) >= m_PreviousTile.transform.localScale.x)
             {
                 Destroy(gameObject);
-                GameManager.Instance.GameState = GameState.GameOver;
+                GameManager.Instance.GameState = GameState.PostGameOver;
             }
             else
             {
@@ -99,7 +99,7 @@ namespace Assets._Scripts
 
         private IEnumerator Release(TileSplitController tile)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
             GameManager.Instance.ObjectPool.ReleaseObject(tile);
         }
     }

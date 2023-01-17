@@ -18,6 +18,7 @@ namespace Assets._Scripts
         public TileController TilePrefab;
         public TileController InitialTile;
 
+
         private void Start()
         {
             m_CurrentDistance += TileLenght;
@@ -74,7 +75,12 @@ namespace Assets._Scripts
         private void OnTilePlaced()
         {
             m_CurrentTile.TilePlaced -= OnTilePlaced;
-            Spawn();
+            GameManager.Instance.Character.Destination = m_CurrentTile.transform.position;
+
+            if (GameManager.Instance.GameState == GameState.Playing)
+            {
+                Spawn();
+            }
         }
     }
 }

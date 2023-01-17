@@ -32,17 +32,30 @@ namespace Assets._Scripts
             }
         }
 
+        public Vector3 Destination;
+
         private void Start()
         {
+            Destination = transform.forward;
             GameManager.Instance.GameStateChanged += OnGameStateChanged;
         }
 
         private void FixedUpdate()
         {
-            if (GameManager.Instance.GameState != GameState.Playing) return;
-            m_RigidBody.MovePosition(transform.position + transform.forward * Time.fixedDeltaTime * Settings.CharacterSpeed);
+            if (transform.position.y < -0.1f)
+            {
+                GameManager.Instance.GameState = GameState.GameOver;
+                CameraManager.Instance.VirtualCam.Follow = null;
+                CameraManager.Instance.VirtualCam.LookAt = null;
+            }
+            else if (GameManager.Instance.GameState == GameState.Playing || GameManager.Instance.GameState == GameState.PostGameOver)
+            {
+                var dir = ((Destination + transform.forward * 5) - transform.position).normalized;
+                m_RigidBody.MovePosition(transform.position + dir * Time.fixedDeltaTime * Settings.CharacterSpeed);
 
-            //TODO: ortala!
+                //    var step = Settings.CharacterSpeed * Time.fixedDeltaTime; // calculate distance to move
+                //    transform.position = Vector3.MoveTowards(transform.position, Destination.transform.position, step);
+            }
         }
 
         private void OnDestroy()
@@ -72,6 +85,13 @@ namespace Assets._Scripts
                 GameManager.Instance.GameStateChanged -= OnGameStateChanged;
                 MovementState = MovementState.Running;
             }
+        }
+
+        private void OnDrawGizmos()
+        {
+            var direction = (Destination - transform.position).normalized;
+
+            Gizmos.DrawLine(transform.position, direction + transform.forward);
         }
     }
 
