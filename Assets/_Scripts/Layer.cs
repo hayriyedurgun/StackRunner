@@ -8,6 +8,7 @@ namespace Assets._Scripts
 {
     public enum Layer
     {
-        Finish = 6
+        Tile = 6,
+        Finish = 7
     }
 }

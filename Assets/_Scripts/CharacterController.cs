@@ -15,8 +15,6 @@ namespace Assets._Scripts
         private Rigidbody m_RigidBody;
         [SerializeField]
         private Animator m_Animator;
-        [SerializeField]
-        private CameraRotator CameraRotator;
 
         public GameplaySettings Settings => GameManager.Instance.GameplaySettings;
 
@@ -75,9 +73,6 @@ namespace Assets._Scripts
             {
                 GameManager.Instance.GameState = GameState.Success;
                 MovementState = MovementState.Dancing;
-
-                CameraManager.Instance.WinCam.LookAt = CameraRotator.transform;
-                CameraManager.Instance.WinCam.Follow = CameraRotator.transform;
 
                 CameraManager.Instance.ChangeCam(CameraManager.Instance.WinCam, .1f);
             }

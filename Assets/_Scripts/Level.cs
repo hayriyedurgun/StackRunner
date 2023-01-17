@@ -11,7 +11,6 @@ namespace Assets._Scripts
     public class Level : MonoBehaviour
     {
         private int m_TileCounter;
-        private TileController m_FinishTile;
 
         [SerializeField]
         private TileSpawner m_Spawner;
@@ -36,7 +35,6 @@ namespace Assets._Scripts
             CameraManager.Instance.ChangeCam(CameraManager.Instance.VirtualCam, 0f);
             GameManager.Instance.GameStateChanged += OnStateChanged;
 
-            m_FinishTile = m_Spawner.CreateFinish(TileCount);
             CurrentTile = m_InitialTile;
         }
 
@@ -70,13 +68,13 @@ namespace Assets._Scripts
         {
             CurrentTile.TilePlaced -= OnTilePlaced;
 
+            var prev = m_CurrentTile;
             if (m_TileCounter == TileCount)
             {
-                CurrentTile = m_FinishTile;
+                CurrentTile = m_Spawner.CreateFinish(prev);
             }
             else if (GameManager.Instance.GameState == GameState.Playing)
             {
-                var prev = m_CurrentTile;
 
                 CurrentTile = m_Spawner.Spawn(prev);
                 CurrentTile.TilePlaced += OnTilePlaced;
