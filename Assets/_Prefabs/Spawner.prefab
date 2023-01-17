@@ -45,4 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileLenght: 4
   TilePrefab: {fileID: 6770987166510602008, guid: a3990d48d59c45b409fc6416d82ca7ec, type: 3}
+  FinishTilePrefab: {fileID: 3686030622359018278, guid: 0080f12d39efd264990c5668f422406b, type: 3}
   InitialTile: {fileID: 0}

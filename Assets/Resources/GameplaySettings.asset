@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3292aaf77df5025489781c0598bd9f46, type: 3}
   m_Name: GameplaySettings
   m_EditorClassIdentifier: 
-  CharacterSpeed: 0.5
+  CharacterSpeed: 1
   TileSpeed: 5
   SpawnX: 4
   YoyoDuration: 2
   Ease: 1
+  CamRotationSpeed: 2

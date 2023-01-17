@@ -15,6 +15,8 @@ namespace Assets._Scripts
         private Rigidbody m_RigidBody;
         [SerializeField]
         private Animator m_Animator;
+        [SerializeField]
+        private CameraRotator CameraRotator;
 
         public GameplaySettings Settings => GameManager.Instance.GameplaySettings;
 
@@ -32,15 +34,15 @@ namespace Assets._Scripts
             }
         }
 
-        public Vector3 Destination;
+        public Transform Destination => GameManager.Instance.CurrentLevel.CurrentTile.transform;
 
         private void Start()
         {
-            Destination = transform.forward;
+            //Destination = transform.forward;
             GameManager.Instance.GameStateChanged += OnGameStateChanged;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             if (transform.position.y < -0.1f)
             {
@@ -48,13 +50,14 @@ namespace Assets._Scripts
                 CameraManager.Instance.VirtualCam.Follow = null;
                 CameraManager.Instance.VirtualCam.LookAt = null;
             }
-            else if (GameManager.Instance.GameState == GameState.Playing || GameManager.Instance.GameState == GameState.PostGameOver)
-            {
-                var dir = ((Destination + transform.forward * 5) - transform.position).normalized;
-                m_RigidBody.MovePosition(transform.position + dir * Time.fixedDeltaTime * Settings.CharacterSpeed);
+        }
 
-                //    var step = Settings.CharacterSpeed * Time.fixedDeltaTime; // calculate distance to move
-                //    transform.position = Vector3.MoveTowards(transform.position, Destination.transform.position, step);
+        private void FixedUpdate()
+        {
+            if (GameManager.Instance.GameState == GameState.Playing || GameManager.Instance.GameState == GameState.PostGameOver)
+            {
+                var dir = ((Destination.position + transform.forward * 5) - transform.position).normalized;
+                m_RigidBody.MovePosition(transform.position + dir * Time.fixedDeltaTime * Settings.CharacterSpeed);
             }
         }
 
@@ -63,6 +66,20 @@ namespace Assets._Scripts
             if (GameManager.Instance)
             {
                 GameManager.Instance.GameStateChanged -= OnGameStateChanged;
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.layer == (int)Layer.Finish)
+            {
+                GameManager.Instance.GameState = GameState.Success;
+                MovementState = MovementState.Dancing;
+
+                CameraManager.Instance.WinCam.LookAt = CameraRotator.transform;
+                CameraManager.Instance.WinCam.Follow = CameraRotator.transform;
+
+                CameraManager.Instance.ChangeCam(CameraManager.Instance.WinCam, .1f);
             }
         }
 
@@ -85,13 +102,6 @@ namespace Assets._Scripts
                 GameManager.Instance.GameStateChanged -= OnGameStateChanged;
                 MovementState = MovementState.Running;
             }
-        }
-
-        private void OnDrawGizmos()
-        {
-            var direction = (Destination - transform.position).normalized;
-
-            Gizmos.DrawLine(transform.position, direction + transform.forward);
         }
     }
 

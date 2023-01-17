@@ -19,5 +19,7 @@ namespace Assets._Scripts.ScriptableObjects
 
         public float YoyoDuration = 2f;
         public Ease Ease = Ease.Linear;
+
+        public float CamRotationSpeed = 2;
     }
 }

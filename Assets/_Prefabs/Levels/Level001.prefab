@@ -45,6 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1328fc80bfe3e404e9ff1924b48bdba0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Spawner: {fileID: 2744139614491228030}
+  m_InitialTile: {fileID: 2720593597397842059}
+  TileCount: 5
 --- !u!1001 &3393010461939735614
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -115,6 +118,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 622671062552161168, guid: 343eae71ca988a34fa85c2bbd8fb4c7e, type: 3}
   m_PrefabInstance: {fileID: 3393010461939735614}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2744139614491228030 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 649434761110596416, guid: 343eae71ca988a34fa85c2bbd8fb4c7e, type: 3}
+  m_PrefabInstance: {fileID: 3393010461939735614}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf93445fbea4a1c4f855507910baa822, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8662143378576535443
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -132,7 +146,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3481514077804377052, guid: a3990d48d59c45b409fc6416d82ca7ec, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.06
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3481514077804377052, guid: a3990d48d59c45b409fc6416d82ca7ec, type: 3}
       propertyPath: m_LocalPosition.z

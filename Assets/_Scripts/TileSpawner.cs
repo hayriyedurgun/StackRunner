@@ -12,75 +12,43 @@ namespace Assets._Scripts
     public class TileSpawner : MonoBehaviour
     {
         private float m_CurrentDistance = 0f;
-        private TileController m_CurrentTile;
 
         public float TileLenght = 2;
         public TileController TilePrefab;
-        public TileController InitialTile;
-
+        public TileController FinishTilePrefab;
 
         private void Start()
         {
             m_CurrentDistance += TileLenght;
-            GameManager.Instance.GameStateChanged += OnStateChanged;
         }
 
-        private void OnDestroy()
+        public TileController Spawn(TileController previousTile)
         {
-            if (GameManager.Instance)
-            {
-                GameManager.Instance.GameStateChanged -= OnStateChanged;
-            }
-
-            if (m_CurrentTile)
-            {
-                m_CurrentTile.TilePlaced -= OnTilePlaced;
-            }
-        }
-
-        public void Spawn()
-        {
-            if (m_CurrentTile == null)
-            {
-                m_CurrentTile = InitialTile;
-            }
-
             var tile = Instantiate(TilePrefab, GameManager.Instance.CurrentLevel.transform);
-            tile.transform.localScale = m_CurrentTile.transform.localScale;
+            tile.transform.localScale = previousTile.transform.localScale;
             var direction = m_CurrentDistance % (TileLenght * 2) == 0 ? 1 : -1;
 
             var pos = tile.transform.position;
-            //pos.x = tile.transform.localScale.x * direction;
             pos.x = GameManager.Instance.GameplaySettings.SpawnX * direction;
             pos.z = m_CurrentDistance;
             tile.transform.position = pos;
 
-            tile.Init(m_CurrentTile);
-
-            m_CurrentTile = tile;
-            m_CurrentTile.TilePlaced += OnTilePlaced;
+            tile.Init(tile);
 
             m_CurrentDistance += TileLenght;
+
+            return tile;
         }
 
-        private void OnStateChanged(GameState state)
+        public TileController CreateFinish(int totalCount)
         {
-            if (state == GameState.Playing)
-            {
-                GameManager.Instance.GameStateChanged -= OnStateChanged;
-                Spawn();
-            }
-        }
+            var tile = Instantiate(FinishTilePrefab, GameManager.Instance.CurrentLevel.transform);
+            
+            var pos = tile.transform.position;
+            pos.z = TileLenght * totalCount - TileLenght / 4;
+            tile.transform.position = pos;
 
-        private void OnTilePlaced()
-        {
-            m_CurrentTile.TilePlaced -= OnTilePlaced;
-            GameManager.Instance.Character.Destination = m_CurrentTile.transform.position;
-
-            if (GameManager.Instance.GameState == GameState.Playing)
-            {
-                Spawn();
-            }
+            return tile;
         }
     }
 }
