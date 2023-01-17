@@ -74,6 +74,7 @@ namespace Assets._Scripts
                 GameManager.Instance.GameState = GameState.Success;
                 MovementState = MovementState.Dancing;
 
+                CameraManager.Instance.WinCam.transform.LookAt(transform.position);
                 CameraManager.Instance.ChangeCam(CameraManager.Instance.WinCam, .1f);
             }
         }
