@@ -15,6 +15,7 @@ namespace Assets._Scripts
         private Rigidbody m_RigidBody;
         [SerializeField]
         private Animator m_Animator;
+        private bool m_IsInitialized;
 
         public GameplaySettings Settings => GameManager.Instance.GameplaySettings;
 
@@ -49,17 +50,21 @@ namespace Assets._Scripts
 
         private void Start()
         {
-            //Destination = transform.forward;
             GameManager.Instance.GameStateChanged += OnGameStateChanged;
         }
 
         private void Update()
         {
-            if (transform.position.y < -0.1f)
+            if (m_IsInitialized &&
+                transform.position.y < -0.1f &&
+                (GameManager.Instance.GameState == GameState.PostGameOver ||
+                GameManager.Instance.GameState == GameState.Playing ))
             {
                 GameManager.Instance.GameState = GameState.GameOver;
                 CameraManager.Instance.VirtualCam.Follow = null;
                 CameraManager.Instance.VirtualCam.LookAt = null;
+
+                m_IsInitialized = false;
             }
         }
 
@@ -84,11 +89,14 @@ namespace Assets._Scripts
         {
             if (other.gameObject.layer == (int)Layer.Finish)
             {
+                other.isTrigger = false;
                 GameManager.Instance.GameState = GameState.Success;
                 MovementState = MovementState.Dancing;
 
                 CameraManager.Instance.WinCam.transform.LookAt(transform.position);
                 CameraManager.Instance.ChangeCam(CameraManager.Instance.WinCam, .1f);
+
+                GameManager.Instance.TileContainer.SetCheckPoint(transform.position);
             }
         }
 
@@ -96,11 +104,11 @@ namespace Assets._Scripts
         {
             if (MovementState == MovementState.Dancing)
             {
-                m_Animator.SetBool(nameof(MovementState.Dancing), true);
+                m_Animator.SetTrigger(nameof(MovementState.Dancing));
             }
             else if (MovementState == MovementState.Running)
             {
-                m_Animator.SetBool(nameof(MovementState.Running), true);
+                m_Animator.SetTrigger(nameof(MovementState.Running));
             }
         }
 
@@ -111,6 +119,25 @@ namespace Assets._Scripts
                 GameManager.Instance.GameStateChanged -= OnGameStateChanged;
                 MovementState = MovementState.Running;
             }
+        }
+
+        public void OnLevelStarted()
+        {
+            //transform.position = Vector3.zero;
+            if (GameManager.Instance.GameState != GameState.Loading)
+            {
+                MovementState = MovementState.Running;
+            }
+            else
+            {
+                MovementState = MovementState.Idle;
+            }
+
+            CameraManager.Instance.VirtualCam.LookAt = transform;
+            CameraManager.Instance.VirtualCam.Follow = transform;
+
+            transform.position = GameManager.Instance.TileContainer.RecoverPosition();
+            m_IsInitialized = true;
         }
     }
 

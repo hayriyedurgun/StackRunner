@@ -18,4 +18,4 @@ MonoBehaviour:
   YoyoDuration: 2
   Ease: 1
   CamRotationSpeed: 50
-  CutThreshold: 1
+  CutThreshold: 0.1

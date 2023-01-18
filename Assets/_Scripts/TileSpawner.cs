@@ -11,45 +11,47 @@ namespace Assets._Scripts
 {
     public class TileSpawner : MonoBehaviour
     {
-        private float m_CurrentDistance = 0f;
         private float m_TileLenght = 4;
-        private float m_FinishTileLen = 1.95f;
+        private float m_FinishTileLen = 1.8f;
 
         public TileController TilePrefab;
         public TileController FinishTilePrefab;
 
         private void Start()
         {
-            m_CurrentDistance += m_TileLenght;
         }
 
         public TileController Spawn(TileController previousTile)
         {
-            var tile = Instantiate(TilePrefab, GameManager.Instance.CurrentLevel.transform);
+            var container = GameManager.Instance.TileContainer;
+            var tile = Instantiate(TilePrefab, GameManager.Instance.CurrentLevel.TileParent);
             tile.transform.localScale = previousTile.transform.localScale;
-            var direction = m_CurrentDistance % (m_TileLenght * 2) == 0 ? 1 : -1;
+            var direction = container.CurrentDistance % (m_TileLenght * 2) == 0 ? 1 : -1;
 
             var pos = tile.transform.position;
             pos.x = GameManager.Instance.GameplaySettings.SpawnX * direction;
-            pos.z = m_CurrentDistance;
+            pos.z = container.CurrentDistance;
             tile.transform.position = pos;
 
             tile.Init(previousTile);
 
-            m_CurrentDistance += m_TileLenght;
+            container.CurrentDistance += m_TileLenght;
 
             return tile;
         }
 
         public TileController CreateFinish(TileController previousTile)
         {
-            var tile = Instantiate(FinishTilePrefab, GameManager.Instance.CurrentLevel.transform);
+            var container = GameManager.Instance.TileContainer;
+
+            var tile = Instantiate(FinishTilePrefab, GameManager.Instance.CurrentLevel.TileParent);
 
             var pos = tile.transform.position;
             pos.x = previousTile.transform.position.x;
-            pos.z = m_CurrentDistance - m_TileLenght + (m_FinishTileLen * 1.5f);
+            pos.z = container.CurrentDistance - (m_TileLenght / 2) + (m_FinishTileLen / 2);
             tile.transform.position = pos;
 
+            container.CurrentDistance = pos.z + (m_TileLenght / 2) + (m_FinishTileLen / 2);
             return tile;
         }
     }

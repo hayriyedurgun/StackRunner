@@ -33,6 +33,11 @@ namespace Assets._Scripts
             }
         }
 
+        private void OnDestroy()
+        {
+            m_Tween?.Kill();
+        }
+
         public void Init(TileController previousTile)
         {
             m_PreviousTile = previousTile;
@@ -84,7 +89,6 @@ namespace Assets._Scripts
                 var fallingPos = edge + (fallingTileSize / 2f * direction);
 
                 var splitTile = GameManager.Instance.ObjectPool.GetObject();
-                splitTile.transform.SetParent(GameManager.Instance.CurrentLevel.transform);
                 splitTile.gameObject.SetActive(true);
                 splitTile.SetMaterial(m_CurrentMaterial);
 

@@ -11,8 +11,8 @@ namespace Assets._Scripts.UI
     {
         public override void OnClick()
         {
-            GameManager.Instance.GameState = GameState.Playing;
             GameManager.Instance.RestartLevel();
+            GameManager.Instance.GameState = GameState.Playing;
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Assets._Scripts
 {
     public enum GameState
     {
+        None,
         Loading,
         Playing,
         PostGameOver,

@@ -18,6 +18,7 @@ namespace Assets._Scripts
         private TileController m_InitialTile;
 
         public int TileCount = 5;
+        public Transform TileParent;
 
         private TileController m_CurrentTile;
         public TileController CurrentTile
@@ -32,10 +33,21 @@ namespace Assets._Scripts
 
         private void Start()
         {
+            GameManager.Instance.Character.OnLevelStarted();
             CameraManager.Instance.ChangeCam(CameraManager.Instance.VirtualCam, 0f);
-            GameManager.Instance.GameStateChanged += OnStateChanged;
-
             CurrentTile = m_InitialTile;
+
+            if (GameManager.Instance.GameState == GameState.Loading)
+            {
+                GameManager.Instance.GameStateChanged += OnStateChanged;
+            }
+            else
+            {
+                var prev = CurrentTile;
+
+                CurrentTile = m_Spawner.Spawn(prev);
+                CurrentTile.TilePlaced += OnTilePlaced;
+            }
         }
 
         private void OnDestroy()

@@ -18,6 +18,8 @@ namespace Assets._Scripts.Managers
         [NonSerialized]
         public Level CurrentLevel;
 
+        public TileContainer TileContainer;
+
         public Action<GameState> GameStateChanged;
 
         public GameplaySettings GameplaySettings;
@@ -34,8 +36,11 @@ namespace Assets._Scripts.Managers
             get => m_GameState;
             set
             {
-                m_GameState = value;
-                GameStateChanged?.Invoke(GameState);
+                if (m_GameState != value)
+                {
+                    m_GameState = value;
+                    GameStateChanged?.Invoke(GameState);
+                }
             }
         }
 
@@ -77,6 +82,7 @@ namespace Assets._Scripts.Managers
         public void ProgressLevel()
         {
             m_CurrentLevelIndex++;
+            CurrentLevel.TileParent.SetParent(TileContainer.transform, true);
             LoadLevel();
         }
 
