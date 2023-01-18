@@ -144,7 +144,7 @@ namespace Assets._Scripts
                 MovementState = MovementState.Dancing;
 
                 CameraManager.Instance.WinCam.transform.LookAt(transform.position);
-                CameraManager.Instance.ChangeCam(CameraManager.Instance.WinCam, .75f);
+                CameraManager.Instance.ChangeCam(CameraManager.Instance.WinCam, 1f);
 
                 GameManager.Instance.TileContainer.SetCheckPoint(transform.position);
 
