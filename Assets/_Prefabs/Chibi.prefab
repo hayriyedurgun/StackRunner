@@ -615,7 +615,7 @@ GameObject:
   - component: {fileID: 562674679184986056}
   - component: {fileID: 2969737244657280815}
   - component: {fileID: 6155743923721454479}
-  - component: {fileID: 1046598175}
+  - component: {fileID: 3881265143444530467}
   m_Layer: 0
   m_Name: Chibi
   m_TagString: Untagged
@@ -689,8 +689,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!65 &1046598175
-BoxCollider:
+--- !u!136 &3881265143444530467
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -699,8 +699,9 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.5, y: 1, z: 0.5}
+  m_Radius: 0.25
+  m_Height: 1
+  m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &6947081527322437394
 GameObject:

@@ -16,6 +16,8 @@ namespace Assets._Scripts
         private Renderer m_Renderer;
         [SerializeField]
         private MaterialLibrary m_MaterialLibrary;
+        [SerializeField]
+        private CollectibleLibrary m_CollectibleLibrary;
 
         public override float TileSize { get; protected set; } = 4f;
 
@@ -46,6 +48,13 @@ namespace Assets._Scripts
 
             m_CurrentMaterial = m_MaterialLibrary.GetMaterial();
             m_Renderer.sharedMaterial = m_CurrentMaterial;
+
+            var collectible = m_CollectibleLibrary.GetRandomCollectible();
+            if (collectible != null)
+            {
+                collectible = Instantiate(collectible);
+                collectible.Initialize(transform);
+            }
         }
 
         private void Place()

@@ -24,7 +24,7 @@ namespace Assets._Scripts
 
         private bool m_IsMovingForward;
         private bool m_IsMovingDestination;
-        private Vector3 dest;
+        private Vector3 m_Dest;
         private Tween m_DestinationTween;
         private Tween m_ForwardTween;
 
@@ -70,8 +70,8 @@ namespace Assets._Scripts
                 {
                     while (GameManager.Instance.CurrentLevel.TileEdges.Any())
                     {
-                        dest = GameManager.Instance.CurrentLevel.TileEdges.Dequeue();
-                        if (transform.position.z < dest.z)
+                        m_Dest = GameManager.Instance.CurrentLevel.TileEdges.Dequeue();
+                        if (transform.position.z < m_Dest.z)
                         {
                             MoveDestination();
                             break;
@@ -86,47 +86,6 @@ namespace Assets._Scripts
             }
         }
 
-        private void MoveForward()
-        {
-            Debug.Log("Moving forward");
-
-            m_IsMovingForward = true;
-            var duration = 1 / Settings.CharacterSpeed;
-
-            m_ForwardTween = DOTween.Sequence()
-                            .Append(transform.DOMove(transform.forward, duration).SetRelative(true).SetEase(Ease.Linear))
-                            .SetLoops(-1, LoopType.Incremental)
-                            .OnKill(() =>
-                            {
-                                m_IsMovingForward = false;
-                                Debug.Log("m_ForwardTween OnKill called!");
-                            });
-                            //.OnUpdate(() => Debug.Log("m_ForwardTween update called!"));
-        }
-
-        private void MoveDestination()
-        {
-            Debug.Log("Moving destination");
-
-            m_IsMovingDestination = true;
-            dest.y = 0;
-            if (m_IsMovingForward)
-            {
-                m_ForwardTween?.Kill();
-                m_IsMovingForward = false;
-            }
-            var duration = Vector3.Distance(transform.position, dest) / Settings.CharacterSpeed;
-
-            m_DestinationTween = DOTween.Sequence()
-                                .Append(transform.DOMove(dest, duration).SetEase(Ease.Linear))
-                                //.Join(transform.DORotateQuaternion(Quaternion.LookRotation(dest - transform.position), Settings.CharacterSpeed).SetEase(Ease.Linear))
-                                .OnKill(() => {
-                                    m_IsMovingDestination = false;
-                                    Debug.Log("m_DestinationTween OnKill called!");
-
-                                });
-        }
-
         private void OnDestroy()
         {
             if (GameManager.Instance)
@@ -139,7 +98,8 @@ namespace Assets._Scripts
         {
             if (other.gameObject.layer == (int)Layer.Finish)
             {
-                other.isTrigger = false;
+                UnityEditor.EditorApplication.isPaused = true;
+                other.enabled = false;
                 GameManager.Instance.GameState = GameState.Success;
                 MovementState = MovementState.Dancing;
 
@@ -148,9 +108,51 @@ namespace Assets._Scripts
 
                 GameManager.Instance.TileContainer.SetCheckPoint(transform.position);
 
-                m_DestinationTween?.Kill(true);
-                m_ForwardTween?.Kill(true);
+                m_DestinationTween?.Kill();
+                m_ForwardTween?.Kill();
             }
+            else if (other.gameObject.layer == (int)Layer.Collectible)
+            {
+                var collectible = other.GetComponent<CollectibleBehaviour>();
+
+                collectible.Collect();
+            }
+        }
+
+        private void MoveForward()
+        {
+            m_IsMovingForward = true;
+            var duration = 1 / Settings.CharacterSpeed;
+
+            m_ForwardTween = DOTween.Sequence()
+                            .Append(transform.DOMove(Vector3.forward * 8, duration * 8).SetRelative(true).SetEase(Ease.Linear))
+                            .Join(transform.DORotateQuaternion(Quaternion.LookRotation(Vector3.forward, Vector3.up), Mathf.Min(.1f, duration)))                            
+                            .OnKill(() =>
+                            {
+                                m_IsMovingForward = false;
+                            });
+        }
+
+        private void MoveDestination()
+        {
+            Debug.Log("MoveDestination called");
+            m_IsMovingDestination = true;
+            m_Dest.y = 0;
+            if (m_IsMovingForward)
+            {
+                m_ForwardTween?.Kill();
+                m_IsMovingForward = false;
+            }
+            var duration = Vector3.Distance(transform.position, m_Dest) / Settings.CharacterSpeed;
+            var direction = m_Dest - transform.position;
+
+            m_DestinationTween = DOTween.Sequence()
+                                .Append(transform.DOMove(m_Dest, duration).SetEase(Ease.Linear))
+                                .Join(transform.DORotateQuaternion(Quaternion.LookRotation(direction, Vector3.up), Mathf.Min(.1f, duration)))
+                                .OnKill(() =>
+                                {
+                                    m_IsMovingDestination = false;
+                                });
         }
 
         private void OnMovementStateChanged()
@@ -165,8 +167,6 @@ namespace Assets._Scripts
             }
             else if (MovementState == MovementState.Dead)
             {
-                Debug.Log("Dead!");
-
                 m_DestinationTween?.Kill();
                 m_ForwardTween?.Kill();
 
