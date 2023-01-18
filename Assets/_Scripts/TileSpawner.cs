@@ -11,22 +11,15 @@ namespace Assets._Scripts
 {
     public class TileSpawner : MonoBehaviour
     {
-        private float m_TileLenght = 4;
-        private float m_FinishTileLen = 1.8f;
-
         public TileController TilePrefab;
-        public TileController FinishTilePrefab;
+        public FinishTileController FinishTilePrefab;
 
-        private void Start()
-        {
-        }
-
-        public TileController Spawn(TileController previousTile)
+        public TileController Spawn(BaseTileController previousTile)
         {
             var container = GameManager.Instance.TileContainer;
             var tile = Instantiate(TilePrefab, GameManager.Instance.CurrentLevel.TileParent);
             tile.transform.localScale = previousTile.transform.localScale;
-            var direction = container.CurrentDistance % (m_TileLenght * 2) == 0 ? 1 : -1;
+            var direction = container.CurrentDistance % (tile.TileSize * 2) == 0 ? 1 : -1;
 
             var pos = tile.transform.position;
             pos.x = GameManager.Instance.GameplaySettings.SpawnX * direction;
@@ -35,12 +28,12 @@ namespace Assets._Scripts
 
             tile.Init(previousTile);
 
-            container.CurrentDistance += m_TileLenght;
+            container.CurrentDistance += tile.TileSize;
 
             return tile;
         }
 
-        public TileController CreateFinish(TileController previousTile)
+        public FinishTileController CreateFinish(BaseTileController previousTile)
         {
             var container = GameManager.Instance.TileContainer;
 
@@ -48,10 +41,10 @@ namespace Assets._Scripts
 
             var pos = tile.transform.position;
             pos.x = previousTile.transform.position.x;
-            pos.z = container.CurrentDistance - (m_TileLenght / 2) + (m_FinishTileLen / 2);
+            pos.z = container.CurrentDistance - (TilePrefab.TileSize / 2) + (tile.TileSize / 2);
             tile.transform.position = pos;
 
-            container.CurrentDistance = pos.z + (m_TileLenght / 2) + (m_FinishTileLen / 2);
+            container.CurrentDistance = pos.z + (TilePrefab.TileSize / 2) + (tile.TileSize / 2);
             return tile;
         }
     }

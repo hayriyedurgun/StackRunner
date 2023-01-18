@@ -7,17 +7,17 @@ using UnityEngine;
 
 namespace Assets._Scripts
 {
-    public class TileController : MonoBehaviour
+    public class TileController : BaseTileController
     {
         private Tween m_Tween;
         private Material m_CurrentMaterial;
-        private TileController m_PreviousTile;
+        private BaseTileController m_PreviousTile;
         [SerializeField]
         private Renderer m_Renderer;
         [SerializeField]
         private MaterialLibrary m_MaterialLibrary;
 
-        public Action TilePlaced;
+        public override float TileSize { get; protected set; } = 4f;
 
         public GameplaySettings Settings => GameManager.Instance.GameplaySettings;
 
@@ -38,7 +38,7 @@ namespace Assets._Scripts
             m_Tween?.Kill();
         }
 
-        public void Init(TileController previousTile)
+        public void Init(BaseTileController previousTile)
         {
             m_PreviousTile = previousTile;
 
@@ -63,7 +63,7 @@ namespace Assets._Scripts
             else
             {
                 Split(splitDiff);
-                TilePlaced?.Invoke();
+                OnPlaced();
             }
         }
 

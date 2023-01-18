@@ -23,5 +23,11 @@ namespace Assets._Scripts.ScriptableObjects
         public float CamRotationSpeed = 2;
 
         public float CutThreshold = .1f;
+
+        public float CloseThreshold = .1f;
+
+        public float IncrementAlpha = 10f;
+
+        public float Radius = 5;
     }
 }

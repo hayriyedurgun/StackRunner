@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Spawner: {fileID: 2744139614491228030}
   m_InitialTile: {fileID: 2720593597397842059}
-  TileCount: 3
+  TileCount: 5
   TileParent: {fileID: 3547389026355737590}
 --- !u!1 &6703899325755763730
 GameObject:

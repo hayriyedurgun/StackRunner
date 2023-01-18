@@ -20,8 +20,8 @@ namespace Assets._Scripts
         public int TileCount = 5;
         public Transform TileParent;
 
-        private TileController m_CurrentTile;
-        public TileController CurrentTile
+        private BaseTileController m_CurrentTile;
+        public BaseTileController CurrentTile
         {
             get => m_CurrentTile;
             private set
@@ -30,6 +30,8 @@ namespace Assets._Scripts
                 m_TileCounter++;
             }
         }
+
+        public Queue<Vector3> TileEdges = new Queue<Vector3>();
 
         private void Start()
         {
@@ -44,7 +46,6 @@ namespace Assets._Scripts
             else
             {
                 var prev = CurrentTile;
-
                 CurrentTile = m_Spawner.Spawn(prev);
                 CurrentTile.TilePlaced += OnTilePlaced;
             }
@@ -87,10 +88,16 @@ namespace Assets._Scripts
             }
             else if (GameManager.Instance.GameState == GameState.Playing)
             {
-
                 CurrentTile = m_Spawner.Spawn(prev);
                 CurrentTile.TilePlaced += OnTilePlaced;
             }
+
+            var edge = prev.GetEdge();
+            if (edge.z > 0)
+            {
+                TileEdges.Enqueue(edge);
+            }
+
         }
     }
 }
