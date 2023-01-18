@@ -25,6 +25,11 @@ namespace Assets._Scripts
 
         private void Update()
         {
+            if (GameManager.Instance.GameState == GameState.GameOver)
+            {
+                m_Tween?.Kill();
+            }
+
             if (GameManager.Instance.GameState != GameState.Playing ||
                 m_Tween == null) return;
 

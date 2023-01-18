@@ -98,7 +98,6 @@ namespace Assets._Scripts
         {
             if (other.gameObject.layer == (int)Layer.Finish)
             {
-                UnityEditor.EditorApplication.isPaused = true;
                 other.enabled = false;
                 GameManager.Instance.GameState = GameState.Success;
                 MovementState = MovementState.Dancing;
