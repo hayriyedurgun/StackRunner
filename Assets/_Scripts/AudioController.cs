@@ -5,27 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets._Scripts.Managers
+namespace Assets._Scripts
 {
-    public class AudioManager : MonoBehaviour
+    public class AudioController : MonoBehaviour
     {
         private int m_Counter = 0;
 
         [SerializeField]
         private AudioSource m_Audio;
-
-        private static AudioManager m_Instance = null;
-        public static AudioManager Instance => m_Instance;
-
-        private void Awake()
-        {
-            m_Instance = this;
-        }
-
-        private void OnDestroy()
-        {
-            m_Instance = null;
-        }
 
         public void Play()
         {

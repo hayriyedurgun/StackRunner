@@ -101,11 +101,11 @@ namespace Assets._Scripts
                 splitTile.transform.position = pos;
 
                 StartCoroutine(Release(splitTile));
-                AudioManager.Instance.Reset();
+                GameManager.Instance.Audio.Reset();
             }
             else
             {
-                AudioManager.Instance.Play();
+                GameManager.Instance.Audio.Play();
             }
         }
 

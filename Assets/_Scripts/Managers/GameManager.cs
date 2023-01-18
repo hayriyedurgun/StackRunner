@@ -30,6 +30,8 @@ namespace Assets._Scripts.Managers
 
         public CharacterController Character;
 
+        public AudioController Audio;
+
         private GameState m_GameState;
         public GameState GameState
         {
