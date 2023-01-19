@@ -57,21 +57,6 @@ namespace Assets._Scripts.Managers
             GameState = GameState.Loading;
         }
 
-        private void Update()
-        {
-            if (GameState == GameState.Playing)
-            {
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    GameState = GameState.GameOver;
-                }
-                if (Input.GetKeyDown(KeyCode.S))
-                {
-                    GameState = GameState.Success;
-                }
-            }
-        }
-
         //Public Methods
         public void ProgressLevel()
         {
@@ -92,11 +77,10 @@ namespace Assets._Scripts.Managers
                 Destroy(CurrentLevel.gameObject);
             }
 
-            //TODO: make shuffle
             var levelIndex = m_CurrentLevelIndex % Levels.Count;
             var level = Levels[levelIndex];
 
-            CurrentLevel = m_LevelFactory.Create();
+            CurrentLevel = m_LevelFactory.Create(level);
         }
     }
 }
