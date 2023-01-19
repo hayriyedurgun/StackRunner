@@ -16,10 +16,13 @@ public class AimOffsetSetter : MonoBehaviour
 
     private void Update()
     {
-        var targetPos = m_Cam.LookAt.transform.position;
-        var pos = new Vector3(.75f, 2.5f, 1.21f);
+        if (m_Cam.LookAt)
+        {
+            var targetPos = m_Cam.LookAt.transform.position;
+            var pos = new Vector3(.75f, 2.5f, 1.21f);
 
-        targetPos += pos;
-        m_Composer.m_TrackedObjectOffset = m_Cam.LookAt.InverseTransformPoint(targetPos);
+            targetPos += pos;
+            m_Composer.m_TrackedObjectOffset = m_Cam.LookAt.InverseTransformPoint(targetPos);
+        }
     }
 }
