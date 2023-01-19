@@ -54,7 +54,7 @@ namespace Assets._Scripts
         {
             m_PreviousTile = previousTile;
 
-            m_Tween = transform.DOMoveX(transform.position.x * -1, Settings.YoyoDuration).SetLoops(-1, LoopType.Yoyo).SetEase(Settings.Ease);
+            m_Tween = transform.DOMoveX(transform.position.x * -1, 2f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear);
 
             m_CurrentMaterial = m_MaterialLibrary.GetMaterial();
             m_Renderer.sharedMaterial = m_CurrentMaterial;
@@ -90,7 +90,7 @@ namespace Assets._Scripts
         {
             var newSize = m_PreviousTile.transform.localScale.x - Mathf.Abs(diff);
             var fallingTileSize = transform.localScale.x - newSize;
-            if (fallingTileSize > Settings.CutThreshold)
+            if (fallingTileSize > Settings.TileCutThreshold)
             {
                 var direction = diff > 0 ? 1 : -1;
 

@@ -32,7 +32,7 @@ namespace Assets._Scripts
             var direction = container.CurrentDistance % (tile.TileSize * 2) == 0 ? 1 : -1;
 
             var pos = tile.transform.position;
-            pos.x = m_GameController.GameplaySettings.SpawnX * direction;
+            pos.x = m_GameController.GameplaySettings.TileSpawnXPos * direction;
             pos.z = container.CurrentDistance;
             tile.transform.position = pos;
 
