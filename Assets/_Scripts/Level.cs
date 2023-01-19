@@ -36,7 +36,6 @@ namespace Assets._Scripts
         private void Start()
         {
             GameManager.Instance.Character.OnLevelStarted();
-            CameraManager.Instance.ChangeCam(CameraManager.Instance.VirtualCam, 0f);
             CurrentTile = m_InitialTile;
 
             if (GameManager.Instance.GameState == GameState.Loading)

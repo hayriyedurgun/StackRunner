@@ -22,7 +22,7 @@ namespace Assets._Scripts
 
         private void Start()
         {
-            m_Transposer = CameraManager.Instance.WinCam.GetCinemachineComponent<CinemachineTransposer>();
+            m_Transposer = GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>();
         }
 
         private void Update()

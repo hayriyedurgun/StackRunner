@@ -8,27 +8,14 @@ using UnityEngine;
 
 namespace Assets._Scripts.Managers
 {
-    public class CameraManager : MonoBehaviour
+    public class CameraController : MonoBehaviour
     {
         private int m_Priority;
+
         [SerializeField]
         private CinemachineBrain m_CinemachineBrain;
-
-        private static CameraManager m_Instance = null;
-        public static CameraManager Instance => m_Instance;
-
         public CinemachineVirtualCamera VirtualCam;
         public CinemachineVirtualCamera WinCam;
-
-        private void Awake()
-        {
-            m_Instance = this;
-        }
-
-        private void OnDestroy()
-        {
-            m_Instance = null;
-        }
 
         public void ChangeCam(CinemachineVirtualCamera cam, float time)
         {

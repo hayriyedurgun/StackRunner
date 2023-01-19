@@ -6,18 +6,11 @@ namespace Assets._Scripts.Managers
 {
     public class GUIManager : MonoBehaviour
     {
-        private static GUIManager m_Instance = null;
-        public static GUIManager Instance => m_Instance;
-
         public LoadingPanel LoadingPanel;
         public PlayingPanel PlayingPanel;
         public SuccessPanel SuccessPanel;
         public GameOverPanel GameOverPanel;
 
-        private void Awake()
-        {
-            m_Instance = this;
-        }
 
         private void Start()
         {
@@ -27,7 +20,6 @@ namespace Assets._Scripts.Managers
 
         private void OnDestroy()
         {
-            m_Instance = null;
             if (GameManager.Instance)
             {
                 GameManager.Instance.GameStateChanged -= OnGameStateChanged;

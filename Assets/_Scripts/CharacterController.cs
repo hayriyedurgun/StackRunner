@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using Zenject;
 
 namespace Assets._Scripts
 {
@@ -19,6 +20,9 @@ namespace Assets._Scripts
         private Animator m_Animator;
         [SerializeField]
         private Rigidbody m_Rigidbody;
+
+        [Inject]
+        private CameraController m_Camera;
 
         private bool m_IsInitialized;
 
@@ -102,8 +106,8 @@ namespace Assets._Scripts
                 GameManager.Instance.GameState = GameState.Success;
                 MovementState = MovementState.Dancing;
 
-                CameraManager.Instance.WinCam.transform.LookAt(transform.position);
-                CameraManager.Instance.ChangeCam(CameraManager.Instance.WinCam, 1f);
+                m_Camera.WinCam.transform.LookAt(transform.position);
+                m_Camera.ChangeCam(m_Camera.WinCam, 1f);
 
                 GameManager.Instance.TileContainer.SetCheckPoint(transform.position);
 
@@ -172,8 +176,9 @@ namespace Assets._Scripts
                 m_Animator.SetTrigger(nameof(MovementState.Idle));
 
                 GameManager.Instance.GameState = GameState.GameOver;
-                CameraManager.Instance.VirtualCam.Follow = null;
-                CameraManager.Instance.VirtualCam.LookAt = null;
+
+                m_Camera.VirtualCam.Follow = null;
+                m_Camera.VirtualCam.LookAt = null;
 
                 m_Rigidbody.isKinematic = false;
             }
@@ -200,8 +205,8 @@ namespace Assets._Scripts
                 MovementState = MovementState.Idle;
             }
 
-            CameraManager.Instance.VirtualCam.LookAt = transform;
-            CameraManager.Instance.VirtualCam.Follow = transform;
+            m_Camera.VirtualCam.LookAt = transform;
+            m_Camera.VirtualCam.Follow = transform;
             m_Rigidbody.isKinematic = true;
 
             transform.position = GameManager.Instance.TileContainer.RecoverPosition();
@@ -212,6 +217,7 @@ namespace Assets._Scripts
             m_ForwardTween?.Kill();
             m_DestinationTween?.Kill();
 
+            m_Camera.ChangeCam(m_Camera.VirtualCam, 0f);
             m_IsInitialized = true;
         }
     }
