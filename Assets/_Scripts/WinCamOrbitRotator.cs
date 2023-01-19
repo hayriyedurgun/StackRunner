@@ -15,7 +15,10 @@ namespace Assets._Scripts
         private float m_Alpha;
         private CinemachineTransposer m_Transposer;
 
-        public GameplaySettings Settings => GameManager.Instance.GameplaySettings;
+        [SerializeField]
+        private float m_Radius = 8;
+        [SerializeField]
+        private float m_IncrementAlphaVal = 0.001f;
 
         private void Start()
         {
@@ -24,15 +27,15 @@ namespace Assets._Scripts
 
         private void Update()
         {
-            var z = Mathf.Sin(m_Alpha) * Settings.Radius;
-            var x = Mathf.Cos(m_Alpha) * Settings.Radius;
+            var z = Mathf.Sin(m_Alpha) * m_Radius;
+            var x = Mathf.Cos(m_Alpha) * m_Radius;
 
             var offset = m_Transposer.m_FollowOffset;
             offset.x = x;
             offset.z = z;
             m_Transposer.m_FollowOffset = offset;
 
-            m_Alpha += Settings.IncrementAlpha;
+            m_Alpha += m_IncrementAlphaVal;
         }
     }
 }
