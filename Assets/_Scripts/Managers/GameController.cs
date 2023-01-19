@@ -11,32 +11,25 @@ using static Assets._Scripts.Level;
 
 namespace Assets._Scripts.Managers
 {
-    public class GameManager : MonoBehaviour
+    public class GameController : MonoBehaviour
     {
         private int m_CurrentLevelIndex;
 
         [Inject]
         private LevelFactory m_LevelFactory;
 
-        private static GameManager m_Instance = null;
-        public static GameManager Instance => m_Instance;
-
         [NonSerialized]
         public Level CurrentLevel;
 
         public TileContainer TileContainer;
 
-        public Action<GameState> GameStateChanged;
+        public event Action<GameState> GameStateChanged;
 
         public GameplaySettings GameplaySettings;
 
         public List<Level> Levels;
 
         public TileSplitObjectPool ObjectPool;
-
-        public CharacterController Character;
-
-        public AudioController Audio;
 
         private GameState m_GameState;
         public GameState GameState
@@ -54,8 +47,6 @@ namespace Assets._Scripts.Managers
 
         private void Awake()
         {
-            m_Instance = this;
-
             m_CurrentLevelIndex = 0;
             LoadLevel();
             ObjectPool.Init(10);
@@ -79,11 +70,6 @@ namespace Assets._Scripts.Managers
                     GameState = GameState.Success;
                 }
             }
-        }
-
-        private void OnDestroy()
-        {
-            m_Instance = null;
         }
 
         //Public Methods

@@ -18,10 +18,12 @@ namespace Assets._Scripts
         private TileFactory m_TileFactory;
         [Inject]
         private FinishTileFactory m_FinishTileFactory;
+        [Inject]
+        private GameController m_GameController;
 
         public TileController Spawn(BaseTileController previousTile, Transform parent)
         {
-            var container = GameManager.Instance.TileContainer;
+            var container = m_GameController.TileContainer;
             //var tile = Instantiate(TilePrefab, GameManager.Instance.CurrentLevel.TileParent);
             var tile = m_TileFactory.Create();
             tile.transform.SetParent(parent);
@@ -30,7 +32,7 @@ namespace Assets._Scripts
             var direction = container.CurrentDistance % (tile.TileSize * 2) == 0 ? 1 : -1;
 
             var pos = tile.transform.position;
-            pos.x = GameManager.Instance.GameplaySettings.SpawnX * direction;
+            pos.x = m_GameController.GameplaySettings.SpawnX * direction;
             pos.z = container.CurrentDistance;
             tile.transform.position = pos;
 
@@ -43,7 +45,7 @@ namespace Assets._Scripts
 
         public FinishTileController CreateFinish(BaseTileController previousTile, Transform parent)
         {
-            var container = GameManager.Instance.TileContainer;
+            var container = m_GameController.TileContainer;
 
             var tile = m_FinishTileFactory.Create();
             tile.transform.SetParent(parent);

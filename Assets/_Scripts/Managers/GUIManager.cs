@@ -1,28 +1,31 @@
 ﻿using Assets._Scripts.UI;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 namespace Assets._Scripts.Managers
 {
     public class GUIManager : MonoBehaviour
     {
+        [Inject]
+        private GameController m_GameController;
+
         public LoadingPanel LoadingPanel;
         public PlayingPanel PlayingPanel;
         public SuccessPanel SuccessPanel;
         public GameOverPanel GameOverPanel;
 
-
         private void Start()
         {
-            GameManager.Instance.GameStateChanged += OnGameStateChanged;
-            OnGameStateChanged(GameManager.Instance.GameState);
+            m_GameController.GameStateChanged += OnGameStateChanged;
+            OnGameStateChanged(m_GameController.GameState);
         }
 
         private void OnDestroy()
         {
-            if (GameManager.Instance)
+            if (m_GameController)
             {
-                GameManager.Instance.GameStateChanged -= OnGameStateChanged;
+                m_GameController.GameStateChanged -= OnGameStateChanged;
             }
         }
 

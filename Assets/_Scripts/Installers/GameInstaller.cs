@@ -14,6 +14,9 @@ namespace Assets._Scripts
         public TileController TilePrefab;
         public FinishTileController FinishTilePrefab;
 
+        public GameController GameController;
+        public CharacterController Character;
+
         public override void InstallBindings()
         {
             Container.BindFactory<Level, LevelFactory>().FromComponentInNewPrefab(LevelPrefab);
@@ -21,7 +24,8 @@ namespace Assets._Scripts
             Container.BindFactory<FinishTileController, FinishTileFactory>().FromComponentInNewPrefab(FinishTilePrefab);
             Container.BindFactory<TileController, TileFactory>().FromComponentInNewPrefab(TilePrefab);
             Container.BindInstance(Audio);
-
+            Container.BindInstance(GameController);
+            Container.BindInstance(Character);
         }
     }
 }

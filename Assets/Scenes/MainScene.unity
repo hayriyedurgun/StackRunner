@@ -347,6 +347,8 @@ MonoBehaviour:
   LevelPrefab: {fileID: 6331150940391507211, guid: 4f6e451a6ffad644fbfbe94e10bacf32, type: 3}
   TilePrefab: {fileID: 6770987166510602008, guid: a3990d48d59c45b409fc6416d82ca7ec, type: 3}
   FinishTilePrefab: {fileID: 6319551826851766031, guid: 0080f12d39efd264990c5668f422406b, type: 3}
+  GameController: {fileID: 384820516435543268}
+  Character: {fileID: 1568753299}
 --- !u!114 &791265956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -688,9 +690,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2916804982176421137, guid: 0c01752d7bbbe40468028ab66400764e, type: 3}
+      propertyPath: ObjectPool
+      value: 
+      objectReference: {fileID: 993349264}
+    - target: {fileID: 2916804982176421137, guid: 0c01752d7bbbe40468028ab66400764e, type: 3}
+      propertyPath: TileContainer
+      value: 
+      objectReference: {fileID: 2043280206}
     - target: {fileID: 6565462568393243087, guid: 0c01752d7bbbe40468028ab66400764e, type: 3}
       propertyPath: m_Name
-      value: GameManager
+      value: GameController
       objectReference: {fileID: 0}
     - target: {fileID: 8364426765156942720, guid: 0c01752d7bbbe40468028ab66400764e, type: 3}
       propertyPath: m_RootOrder
@@ -730,6 +740,17 @@ PrefabInstance:
       objectReference: {fileID: 2043280205}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c01752d7bbbe40468028ab66400764e, type: 3}
+--- !u!114 &384820516435543268 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2916804982176421137, guid: 0c01752d7bbbe40468028ab66400764e, type: 3}
+  m_PrefabInstance: {fileID: 384820516435543267}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56715c5318e3021439e7ee7d559f1aef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1021918769498868526
 PrefabInstance:
   m_ObjectHideFlags: 0

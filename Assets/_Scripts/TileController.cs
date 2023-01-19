@@ -19,22 +19,23 @@ namespace Assets._Scripts
         private MaterialLibrary m_MaterialLibrary;
         [SerializeField]
         private CollectibleLibrary m_CollectibleLibrary;
-
+        [Inject]
+        private GameController m_GameController;
         [Inject]
         private AudioController m_Audio;
 
         public override float TileSize { get; protected set; } = 4f;
 
-        public GameplaySettings Settings => GameManager.Instance.GameplaySettings;
+        public GameplaySettings Settings => m_GameController.GameplaySettings;
 
         private void Update()
         {
-            if (GameManager.Instance.GameState == GameState.GameOver)
+            if (m_GameController.GameState == GameState.GameOver)
             {
                 m_Tween?.Kill();
             }
 
-            if (GameManager.Instance.GameState != GameState.Playing ||
+            if (m_GameController.GameState != GameState.Playing ||
                 m_Tween == null) return;
 
             if (Input.GetMouseButtonDown(0))
@@ -76,7 +77,7 @@ namespace Assets._Scripts
             if (Math.Abs(splitDiff) >= m_PreviousTile.transform.localScale.x)
             {
                 Destroy(gameObject);
-                GameManager.Instance.GameState = GameState.PostGameOver;
+                m_GameController.GameState = GameState.PostGameOver;
             }
             else
             {
@@ -106,7 +107,7 @@ namespace Assets._Scripts
                 var edge = transform.position.x + (newSize / 2f * direction);
                 var fallingPos = edge + (fallingTileSize / 2f * direction);
 
-                var splitTile = GameManager.Instance.ObjectPool.GetObject();
+                var splitTile = m_GameController.ObjectPool.GetObject();
                 splitTile.gameObject.SetActive(true);
                 splitTile.SetMaterial(m_CurrentMaterial);
 
@@ -130,7 +131,7 @@ namespace Assets._Scripts
         private IEnumerator Release(TileSplitController tile)
         {
             yield return new WaitForSeconds(2f);
-            GameManager.Instance.ObjectPool.ReleaseObject(tile);
+            m_GameController.ObjectPool.ReleaseObject(tile);
         }
     }
 }

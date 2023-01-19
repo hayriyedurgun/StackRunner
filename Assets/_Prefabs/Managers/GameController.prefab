@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8364426765156942720}
-  - component: {fileID: 9062601160886935763}
+  - component: {fileID: 2916804982176421137}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: GameController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9062601160886935763
+--- !u!114 &2916804982176421137
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,9 +40,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6565462568393243087}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c67e7a12ae197c248a0ddb9bf700a9b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 56715c5318e3021439e7ee7d559f1aef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TileContainer: {fileID: 0}
   GameplaySettings: {fileID: 11400000, guid: 834d2cca1d54fb04a8670e5e2e5a687d, type: 2}
   Levels:
   - {fileID: 6331150940391507211, guid: 4f6e451a6ffad644fbfbe94e10bacf32, type: 3}
+  ObjectPool: {fileID: 0}

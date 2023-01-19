@@ -6,11 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TMPro;
+using Zenject;
 
 namespace Assets._Scripts.UI
 {
     public class LoadingPanel : BasePanel
     {
+        [Inject]
+        private GameController m_GameController;
+
         public TextMeshProUGUI TapToPlay;
 
         private void Start()
@@ -20,8 +24,7 @@ namespace Assets._Scripts.UI
 
         public override void OnClick()
         {
-            //TODO: !!!
-            GameManager.Instance.GameState = GameState.Playing;
+            m_GameController.GameState = GameState.Playing;
         }
     }
 }

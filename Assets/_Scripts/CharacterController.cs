@@ -20,9 +20,14 @@ namespace Assets._Scripts
         private Animator m_Animator;
         [SerializeField]
         private Rigidbody m_Rigidbody;
+        [SerializeField]
+        private float Speed = 2;
 
         [Inject]
         private CameraController m_Camera;
+
+        [Inject]
+        private GameController m_GameController;
 
         private bool m_IsInitialized;
 
@@ -31,8 +36,6 @@ namespace Assets._Scripts
         private Vector3 m_Dest;
         private Tween m_DestinationTween;
         private Tween m_ForwardTween;
-
-        public GameplaySettings Settings => GameManager.Instance.GameplaySettings;
 
         private MovementState m_MovementState;
         public MovementState MovementState
@@ -50,14 +53,14 @@ namespace Assets._Scripts
 
         private void Start()
         {
-            GameManager.Instance.GameStateChanged += OnGameStateChanged;
+            m_GameController.GameStateChanged += OnGameStateChanged;
         }
 
         private void Update()
         {
             if (m_IsInitialized &&
-                (GameManager.Instance.GameState == GameState.PostGameOver ||
-                GameManager.Instance.GameState == GameState.Playing) &&
+                (m_GameController.GameState == GameState.PostGameOver ||
+                m_GameController.GameState == GameState.Playing) &&
                 MovementState != MovementState.Dead)
             {
                 //Detect grounded
@@ -72,9 +75,9 @@ namespace Assets._Scripts
 
                 if (!m_IsMovingDestination)
                 {
-                    while (GameManager.Instance.CurrentLevel.TileEdges.Any())
+                    while (m_GameController.CurrentLevel.TileEdges.Any())
                     {
-                        m_Dest = GameManager.Instance.CurrentLevel.TileEdges.Dequeue();
+                        m_Dest = m_GameController.CurrentLevel.TileEdges.Dequeue();
                         if (transform.position.z < m_Dest.z)
                         {
                             MoveDestination();
@@ -92,9 +95,9 @@ namespace Assets._Scripts
 
         private void OnDestroy()
         {
-            if (GameManager.Instance)
+            if (m_GameController)
             {
-                GameManager.Instance.GameStateChanged -= OnGameStateChanged;
+                m_GameController.GameStateChanged -= OnGameStateChanged;
             }
         }
 
@@ -103,13 +106,13 @@ namespace Assets._Scripts
             if (other.gameObject.layer == (int)Layer.Finish)
             {
                 other.enabled = false;
-                GameManager.Instance.GameState = GameState.Success;
+                m_GameController.GameState = GameState.Success;
                 MovementState = MovementState.Dancing;
 
                 m_Camera.WinCam.transform.LookAt(transform.position);
                 m_Camera.ChangeCam(m_Camera.WinCam, 1f);
 
-                GameManager.Instance.TileContainer.SetCheckPoint(transform.position);
+                m_GameController.TileContainer.SetCheckPoint(transform.position);
 
                 m_DestinationTween?.Kill();
                 m_ForwardTween?.Kill();
@@ -125,7 +128,7 @@ namespace Assets._Scripts
         private void MoveForward()
         {
             m_IsMovingForward = true;
-            var duration = 1 / Settings.CharacterSpeed;
+            var duration = 1 / Speed;
 
             m_ForwardTween = DOTween.Sequence()
                             .Append(transform.DOMove(Vector3.forward * 8, duration * 8).SetRelative(true).SetEase(Ease.Linear))
@@ -138,7 +141,6 @@ namespace Assets._Scripts
 
         private void MoveDestination()
         {
-            Debug.Log("MoveDestination called");
             m_IsMovingDestination = true;
             m_Dest.y = 0;
             if (m_IsMovingForward)
@@ -146,7 +148,7 @@ namespace Assets._Scripts
                 m_ForwardTween?.Kill();
                 m_IsMovingForward = false;
             }
-            var duration = Vector3.Distance(transform.position, m_Dest) / Settings.CharacterSpeed;
+            var duration = Vector3.Distance(transform.position, m_Dest) / Speed;
             var direction = m_Dest - transform.position;
 
             m_DestinationTween = DOTween.Sequence()
@@ -175,7 +177,7 @@ namespace Assets._Scripts
 
                 m_Animator.SetTrigger(nameof(MovementState.Idle));
 
-                GameManager.Instance.GameState = GameState.GameOver;
+                m_GameController.GameState = GameState.GameOver;
 
                 m_Camera.VirtualCam.Follow = null;
                 m_Camera.VirtualCam.LookAt = null;
@@ -188,7 +190,7 @@ namespace Assets._Scripts
         {
             if (gamestate == GameState.Playing)
             {
-                GameManager.Instance.GameStateChanged -= OnGameStateChanged;
+                m_GameController.GameStateChanged -= OnGameStateChanged;
                 MovementState = MovementState.Running;
             }
         }
@@ -196,7 +198,7 @@ namespace Assets._Scripts
         public void OnLevelStarted()
         {
             //transform.position = Vector3.zero;
-            if (GameManager.Instance.GameState != GameState.Loading)
+            if (m_GameController.GameState != GameState.Loading)
             {
                 MovementState = MovementState.Running;
             }
@@ -209,7 +211,7 @@ namespace Assets._Scripts
             m_Camera.VirtualCam.Follow = transform;
             m_Rigidbody.isKinematic = true;
 
-            transform.position = GameManager.Instance.TileContainer.RecoverPosition();
+            transform.position = m_GameController.TileContainer.RecoverPosition();
             transform.rotation = Quaternion.Euler(Vector3.zero);
             m_IsMovingDestination = false;
             m_IsMovingForward = false;

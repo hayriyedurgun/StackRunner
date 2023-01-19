@@ -17,7 +17,10 @@ namespace Assets._Scripts
         private TileSpawner m_Spawner;
         [SerializeField]
         private TileController m_InitialTile;
-
+        [Inject]
+        private GameController m_GameController;
+        [Inject]
+        private CharacterController m_Character;
         public int TileCount = 5;
         public Transform TileParent;
 
@@ -36,12 +39,12 @@ namespace Assets._Scripts
 
         private void Start()
         {
-            GameManager.Instance.Character.OnLevelStarted();
+            m_Character.OnLevelStarted();
             CurrentTile = m_InitialTile;
 
-            if (GameManager.Instance.GameState == GameState.Loading)
+            if (m_GameController.GameState == GameState.Loading)
             {
-                GameManager.Instance.GameStateChanged += OnStateChanged;
+                m_GameController.GameStateChanged += OnStateChanged;
             }
             else
             {
@@ -53,9 +56,9 @@ namespace Assets._Scripts
 
         private void OnDestroy()
         {
-            if (GameManager.Instance)
+            if (m_GameController)
             {
-                GameManager.Instance.GameStateChanged -= OnStateChanged;
+                m_GameController.GameStateChanged -= OnStateChanged;
             }
 
             if (m_CurrentTile)
@@ -68,7 +71,7 @@ namespace Assets._Scripts
         {
             if (state == GameState.Playing)
             {
-                GameManager.Instance.GameStateChanged -= OnStateChanged;
+                m_GameController.GameStateChanged -= OnStateChanged;
 
                 var prev = m_CurrentTile;
 
@@ -86,7 +89,7 @@ namespace Assets._Scripts
             {
                 CurrentTile = m_Spawner.CreateFinish(prev, TileParent);
             }
-            else if (GameManager.Instance.GameState == GameState.Playing)
+            else if (m_GameController.GameState == GameState.Playing)
             {
                 CurrentTile = m_Spawner.Spawn(prev, TileParent);
                 CurrentTile.TilePlaced += OnTilePlaced;
