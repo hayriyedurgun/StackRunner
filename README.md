@@ -19,3 +19,5 @@ Gameplay settings contains:
 * Zenject
 * DOTween
 
+
+![Alt Text](https://github.com/hayriyedurgun/StackRunner/blob/main/Animation.gif)
