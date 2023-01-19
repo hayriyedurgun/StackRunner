@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
-using static Assets._Scripts.Level;
 
 namespace Assets._Scripts.Managers
 {

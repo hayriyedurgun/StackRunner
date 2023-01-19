@@ -21,6 +21,7 @@ namespace Assets._Scripts
         private GameController m_GameController;
         [Inject]
         private CharacterController m_Character;
+
         public int TileCount = 5;
         public Transform TileParent;
 

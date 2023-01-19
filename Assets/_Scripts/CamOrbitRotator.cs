@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Assets._Scripts
 {
-    public class WinCamOrbitRotator : MonoBehaviour
+    public class CamOrbitRotator : MonoBehaviour
     {
         private float m_Alpha;
         private CinemachineTransposer m_Transposer;
