@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Assets._Scripts.Managers
 {
-    public class GUIManager : MonoBehaviour
+    public class GUIController : MonoBehaviour
     {
         [Inject]
         private GameController m_GameController;
