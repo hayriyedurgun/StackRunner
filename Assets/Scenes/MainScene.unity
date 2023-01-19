@@ -343,6 +343,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Camera: {fileID: 1149202081971341450}
+  Audio: {fileID: 861817807}
+  LevelPrefab: {fileID: 6331150940391507211, guid: 4f6e451a6ffad644fbfbe94e10bacf32, type: 3}
+  TilePrefab: {fileID: 6770987166510602008, guid: a3990d48d59c45b409fc6416d82ca7ec, type: 3}
+  FinishTilePrefab: {fileID: 6319551826851766031, guid: 0080f12d39efd264990c5668f422406b, type: 3}
 --- !u!114 &791265956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -836,31 +840,31 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1149202081557751292, guid: 9193d4dd6f10a4847b093a4b7c699ea4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.774978
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1149202081557751292, guid: 9193d4dd6f10a4847b093a4b7c699ea4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1149202081557751292, guid: 9193d4dd6f10a4847b093a4b7c699ea4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 26.41869
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1149202081557751292, guid: 9193d4dd6f10a4847b093a4b7c699ea4, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.3107772
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1149202081557751292, guid: 9193d4dd6f10a4847b093a4b7c699ea4, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.04742799
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1149202081557751292, guid: 9193d4dd6f10a4847b093a4b7c699ea4, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.9384336
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1149202081557751292, guid: 9193d4dd6f10a4847b093a4b7c699ea4, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.1432152
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1149202081707505654, guid: 9193d4dd6f10a4847b093a4b7c699ea4, type: 3}
       propertyPath: m_Name

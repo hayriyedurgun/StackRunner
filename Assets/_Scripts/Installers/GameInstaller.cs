@@ -1,3 +1,4 @@
+using Assets._Scripts.Factories;
 using Assets._Scripts.Managers;
 using UnityEngine;
 using Zenject;
@@ -7,10 +8,20 @@ namespace Assets._Scripts
     public class GameInstaller : MonoInstaller
     {
         public CameraController Camera;
+        public AudioController Audio;
+        public Level LevelPrefab;
+
+        public TileController TilePrefab;
+        public FinishTileController FinishTilePrefab;
 
         public override void InstallBindings()
         {
+            Container.BindFactory<Level, LevelFactory>().FromComponentInNewPrefab(LevelPrefab);
             Container.BindInstance(Camera);
+            Container.BindFactory<FinishTileController, FinishTileFactory>().FromComponentInNewPrefab(FinishTilePrefab);
+            Container.BindFactory<TileController, TileFactory>().FromComponentInNewPrefab(TilePrefab);
+            Container.BindInstance(Audio);
+
         }
     }
 }

@@ -1,16 +1,22 @@
-﻿using Assets._Scripts.ScriptableObjects;
+﻿using Assets._Scripts.Factories;
+using Assets._Scripts.ScriptableObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using Zenject;
+using static Assets._Scripts.Level;
 
 namespace Assets._Scripts.Managers
 {
     public class GameManager : MonoBehaviour
     {
         private int m_CurrentLevelIndex;
+
+        [Inject]
+        private LevelFactory m_LevelFactory;
 
         private static GameManager m_Instance = null;
         public static GameManager Instance => m_Instance;
@@ -104,7 +110,7 @@ namespace Assets._Scripts.Managers
             var levelIndex = m_CurrentLevelIndex % Levels.Count;
             var level = Levels[levelIndex];
 
-            CurrentLevel = Instantiate(level);
+            CurrentLevel = m_LevelFactory.Create();
         }
     }
 }

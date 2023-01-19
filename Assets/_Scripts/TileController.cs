@@ -4,6 +4,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 namespace Assets._Scripts
 {
@@ -18,6 +19,9 @@ namespace Assets._Scripts
         private MaterialLibrary m_MaterialLibrary;
         [SerializeField]
         private CollectibleLibrary m_CollectibleLibrary;
+
+        [Inject]
+        private AudioController m_Audio;
 
         public override float TileSize { get; protected set; } = 4f;
 
@@ -115,11 +119,11 @@ namespace Assets._Scripts
                 splitTile.transform.position = pos;
 
                 StartCoroutine(Release(splitTile));
-                GameManager.Instance.Audio.Reset();
+                m_Audio.Reset();
             }
             else
             {
-                GameManager.Instance.Audio.Play();
+                m_Audio.Play();
             }
         }
 

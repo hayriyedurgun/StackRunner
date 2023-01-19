@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using Zenject;
 
 namespace Assets._Scripts
 {
@@ -45,7 +46,7 @@ namespace Assets._Scripts
             else
             {
                 var prev = CurrentTile;
-                CurrentTile = m_Spawner.Spawn(prev);
+                CurrentTile = m_Spawner.Spawn(prev, TileParent);
                 CurrentTile.TilePlaced += OnTilePlaced;
             }
         }
@@ -71,7 +72,7 @@ namespace Assets._Scripts
 
                 var prev = m_CurrentTile;
 
-                CurrentTile = m_Spawner.Spawn(prev);
+                CurrentTile = m_Spawner.Spawn(prev, TileParent);
                 CurrentTile.TilePlaced += OnTilePlaced;
             }
         }
@@ -83,11 +84,11 @@ namespace Assets._Scripts
             var prev = m_CurrentTile;
             if (m_TileCounter == TileCount)
             {
-                CurrentTile = m_Spawner.CreateFinish(prev);
+                CurrentTile = m_Spawner.CreateFinish(prev, TileParent);
             }
             else if (GameManager.Instance.GameState == GameState.Playing)
             {
-                CurrentTile = m_Spawner.Spawn(prev);
+                CurrentTile = m_Spawner.Spawn(prev, TileParent);
                 CurrentTile.TilePlaced += OnTilePlaced;
             }
 
