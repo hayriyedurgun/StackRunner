@@ -9,7 +9,6 @@ namespace Assets._Scripts
     {
         public CameraController Camera;
         public AudioController Audio;
-        public Level LevelPrefab;
 
         public TileController TilePrefab;
         public FinishTileController FinishTilePrefab;
@@ -19,7 +18,7 @@ namespace Assets._Scripts
 
         public override void InstallBindings()
         {
-            Container.BindFactory<Level, LevelFactory>().FromComponentInNewPrefab(LevelPrefab);
+            Container.Bind<LevelFactory>().AsSingle();
             Container.BindInstance(Camera);
             Container.BindFactory<FinishTileController, FinishTileFactory>().FromComponentInNewPrefab(FinishTilePrefab);
             Container.BindFactory<TileController, TileFactory>().FromComponentInNewPrefab(TilePrefab);

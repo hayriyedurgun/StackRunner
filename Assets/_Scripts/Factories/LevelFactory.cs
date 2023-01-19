@@ -7,7 +7,17 @@ using Zenject;
 
 namespace Assets._Scripts.Factories
 {
-    public class LevelFactory : PlaceholderFactory<Level>
+    public class LevelFactory : PrefabFactory<Level>
     {
+        //private int m_Index;
+        //public List<Level> LevelPrefabs;
+
+        //public override Level Create(UnityEngine.Object prefab)
+        //{
+        //    var temp = m_Index % LevelPrefabs.Count;
+        //    m_Index++;
+        //    return base.Create(LevelPrefabs[temp]);
+        //}
+
     }
 }

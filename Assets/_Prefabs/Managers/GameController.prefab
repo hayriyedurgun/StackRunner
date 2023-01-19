@@ -47,4 +47,5 @@ MonoBehaviour:
   GameplaySettings: {fileID: 11400000, guid: 834d2cca1d54fb04a8670e5e2e5a687d, type: 2}
   Levels:
   - {fileID: 6331150940391507211, guid: 4f6e451a6ffad644fbfbe94e10bacf32, type: 3}
+  - {fileID: 6331150940391507211, guid: b996926474cb5e646976d2d175012c87, type: 3}
   ObjectPool: {fileID: 0}
