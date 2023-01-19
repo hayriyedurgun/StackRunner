@@ -25,7 +25,7 @@ namespace Assets._Scripts
             {
                 m_ScaleTween = transform.DOScale(Vector3.one * .25f, .5f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo).SetRelative(true);
             }
-            if (CanScale)
+            if (CanRotate)
             {
                 m_RotateTween = transform.DORotate(Vector3.up * 25, .1f).SetLoops(-1, LoopType.Incremental);
             }
