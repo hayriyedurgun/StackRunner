@@ -2,7 +2,7 @@
 
 It is runner game for a interview case.
 
-Character tries to reach finish platform while platform pieces coming from left and right sequentially. Platform creating from platform pieces with user's tap like Ketchapp's "Stack" game.
+Character tries to reach finish platform while platform pieces coming from left and right sequentially. Platform creating from platform pieces with user's tap like Ketchapp's [Stack](https://play.google.com/store/apps/details?id=com.ketchapp.stack&hl=en&gl=US) game.
 
 When the player successfully completes the level, player makes a dance animation and orbit camera looks at the character.
 After completing the level, other levels are added to the end of the final platform of the previous level.
